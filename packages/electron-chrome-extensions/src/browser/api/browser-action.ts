@@ -61,6 +61,15 @@ const getBrowserActionDefaults = (extension: Electron.Extension): ExtensionActio
 
     return action
   }
+
+  // Fallback: Create action for extensions without explicit action but with icons.
+  const iconPath = getIconPath(extension);
+  if (iconPath) {
+    const action: ExtensionAction = {}
+    action.title = manifest.name;
+    action.icon = { path: iconPath };
+    return action;
+  }
 }
 
 interface ExtensionActionStore extends Partial<ExtensionAction> {
